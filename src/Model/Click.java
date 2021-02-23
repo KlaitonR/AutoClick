@@ -6,6 +6,7 @@ import java.awt.event.InputEvent;
 
 public class Click {
 
+	@SuppressWarnings("deprecation")
 	public static void click(int x, int y) throws AWTException{
 	
 	  Robot bot = new Robot();
