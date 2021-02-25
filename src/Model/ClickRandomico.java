@@ -56,7 +56,7 @@ public class ClickRandomico extends Thread implements Runnable{
 					
 				click();
 				teclaAtiva = true;
-				cont = System.currentTimeMillis() + ThreadLocalRandom.current().nextLong(maxTimeTecla) + 2000;
+				cont = System.currentTimeMillis() + ThreadLocalRandom.current().nextLong(maxTimeTecla + 2000);
 				
 				}else if (teclaAtiva) {
 				
@@ -82,7 +82,6 @@ public class ClickRandomico extends Thread implements Runnable{
 			}
 		}
 	}		
-	
 	
 	private void click() {
 		
