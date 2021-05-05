@@ -81,6 +81,8 @@ public class ClickRandomico extends Thread implements Runnable{
 				
 			}
 		}
+		
+		PrincipalController.tecladoAtivo = false;
 	}		
 	
 	private void click() {

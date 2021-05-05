@@ -1,6 +1,8 @@
 package view;
 
 import java.util.concurrent.ThreadLocalRandom;
+
+import Model.AutoConstruiction;
 import Model.ClickPadrao;
 import Model.ClickRandomico;
 import Model.GravaMouse;
@@ -19,6 +21,11 @@ public class PrincipalController{
 	@FXML TextField maxTimeWaiting;
 	@FXML TextField maxTtimeTecla;
 	@FXML ComboBox<String> teclas;
+	@FXML ComboBox<String> teclasRpMouse;
+	
+	@FXML TextField breakClick;
+	
+	@FXML TextField timeWaitingTecla;
 	
 	public static boolean parada;
 	public static long init;
@@ -30,6 +37,9 @@ public class PrincipalController{
 	private int minTimeWait;
 	private int maxTimeTecla;
 	
+	private int breakClicks;        
+	private int timeWaitingTeclas;
+	
 	private String tecla;
 	
 	public static boolean tecladoAtivo;
@@ -40,9 +50,25 @@ public class PrincipalController{
 	GravaMouse gm;
 	ReproduzirMouse rm;
 	
+	private double posicaoX[] = new double [50];
+	private double posicaoY[] = new double [50];
+	
 	@FXML
 	public void initialize() {
 		inicializaComboTeclas();
+		inicializaComboTeclasRpMouse();
+	}
+	
+	@FXML
+	public void contrucao() {
+		
+		System.out.println("a");
+		
+		parada = false;
+		
+		Thread c = new AutoConstruiction();
+		c.start();
+		
 	}
 	
 	@FXML
@@ -143,8 +169,9 @@ public class PrincipalController{
 		gravandoMouse = true;
 		
 		System.out.println("Iniciou gravação");
+		breakClicks = Integer.parseInt(breakClick.getText())*1000;
 		
-		Thread gm = new GravaMouse();
+		Thread gm = new GravaMouse(breakClicks);
 		this.gm = (GravaMouse) gm;
 		this.gm.start();
 		
@@ -153,15 +180,73 @@ public class PrincipalController{
 	@FXML
 	public void reproducaoMouse() {
 		
-		parada = false;
-		
 		System.out.println("Iniciou reprodução");
 		
-		if(gm != null) {
-			reproduzindoMouse =  true;
-			Thread rm = new ReproduzirMouse(gm.getPositionMouseX(), gm.getPositionMouseY());
-			this.rm = (ReproduzirMouse)rm;
-			rm.start();
+		parada = false;
+		tecla = teclasRpMouse.getSelectionModel().getSelectedItem();
+		
+		if(tecla != null) {
+			
+			tecladoAtivo = true;
+			
+			try {
+				
+				timeWaitingTeclas = Integer.parseInt(timeWaitingTecla.getText())*1000;
+				
+			} catch (NumberFormatException e) {
+				mostraMensagem("Só é possivel digitar números.", AlertType.WARNING);
+			}
+			
+			teste();
+			
+//			if(gm != null) {
+				breakClicks = Integer.parseInt(breakClick.getText())*1000;
+				reproduzindoMouse = true;
+//				Thread rm = new ReproduzirMouse(gm.getPositionMouseX(), gm.getPositionMouseY(), breakClicks, timeWaitingTeclas, tecla);
+				Thread rm = new ReproduzirMouse(posicaoX, posicaoY, breakClicks, timeWaitingTeclas, tecla);
+				this.rm = (ReproduzirMouse)rm;
+				rm.start();
+//			}
+			
+		}else {
+		
+			teste();
+			
+//			if(gm != null) {
+				breakClicks = Integer.parseInt(breakClick.getText())*1000;
+				reproduzindoMouse =  true;
+//				Thread rm = new ReproduzirMouse(gm.getPositionMouseX(), gm.getPositionMouseY(), breakClicks);
+				Thread rm = new ReproduzirMouse(posicaoX, posicaoY, breakClicks);
+				this.rm = (ReproduzirMouse)rm;
+				rm.start();
+//			}
+		}
+		
+	}
+	
+	public void teste() {
+		
+		posicaoX[0] = 814;
+		posicaoY[0] = 422;
+		
+		posicaoX[1] = 1102;
+		posicaoY[1] = 197;
+		
+		posicaoX[2] = 1226;
+		posicaoY[2] = 185;
+		
+		posicaoX[3] = 852;
+		posicaoY[3] = 421;
+		
+		posicaoX[4] = 1110;
+		posicaoY[4] = 243;
+		
+		posicaoX[5] = 535;
+		posicaoY[5] = 559;
+		
+		for(int i = 6; i<posicaoX.length; i++) {
+			posicaoX[i] = -1;
+			posicaoY[i] = -1;
 		}
 		
 	}
@@ -180,6 +265,19 @@ public class PrincipalController{
 		teclas.getItems().add("ESC");
 		teclas.getItems().add("TAB");
 		teclas.getItems().add("CAPSLOOK");
+		teclas.getItems().add("M");
+		
+//		teclas.getSelectionModel().select(0);	
+	}
+	
+	private void inicializaComboTeclasRpMouse() {
+
+		teclasRpMouse.getItems().add("SPACE");
+		teclasRpMouse.getItems().add("ENTER");
+		teclasRpMouse.getItems().add("ESC");
+		teclasRpMouse.getItems().add("TAB");
+		teclasRpMouse.getItems().add("CAPSLOOK");
+		teclasRpMouse.getItems().add("M");
 		
 //		teclas.getSelectionModel().select(0);	
 	}

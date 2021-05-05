@@ -8,8 +8,12 @@ public class GravaMouse extends Thread implements Runnable {
 	public double posicaoX[] = new double [50];
 	public double posicaoY[] = new double [50];
 	private int cont;
-	private int intervalo = 2000;
+	private int breakClick;
 	private long init;
+	
+	public GravaMouse(int breakClick) {
+		this.breakClick = breakClick;
+	}
 	
 	public double[] getPositionMouseX() {
 		return posicaoX;
@@ -19,17 +23,29 @@ public class GravaMouse extends Thread implements Runnable {
 		return posicaoY;
 	}
 	
+	public void inicializaPosicao() {
+		
+		for(int i = 0; i<posicaoX.length; i++) {
+			posicaoX[i] = -1;
+			posicaoY[i] = -1;
+		}
+		
+	}
+	
 	@Override
 	public void run() {
+		
+		inicializaPosicao();
 		
 		init = System.currentTimeMillis();
 		
 		while(PrincipalController.gravandoMouse) {
 			if(!PrincipalController.parada) {
 				if(cont < 50 - 1 ) {
-					if(System.currentTimeMillis() >= init + intervalo) {
+					if(System.currentTimeMillis() >= init + breakClick) {
 						
 						getPosition();
+						System.out.println("clickou");
 						
 					}else {
 						if(cont == 50) {
@@ -39,7 +55,7 @@ public class GravaMouse extends Thread implements Runnable {
 					}
 				}
 			}else {
-				PrincipalController.gravandoMouse = false;
+				PrincipalController.gravandoMouse = false;		
 			}
 		}
 		
