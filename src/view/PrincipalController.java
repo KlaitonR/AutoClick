@@ -2,30 +2,33 @@ package view;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import Model.Agilidade;
 import Model.AutoConstruiction;
 import Model.ClickPadrao;
 import Model.ClickRandomico;
 import Model.GravaMouse;
+import Model.Proteicos;
 import Model.ReproduzirMouse;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
 public class PrincipalController{
 
 	@FXML TextField timeWaiting;
-	
 	@FXML TextField minTimeWaiting;
 	@FXML TextField maxTimeWaiting;
 	@FXML TextField maxTtimeTecla;
+	@FXML TextField breakClick;
+	@FXML TextField timeWaitingTecla;
+	
+	@FXML RadioButton agilidadePriffdinas;
+	
 	@FXML ComboBox<String> teclas;
 	@FXML ComboBox<String> teclasRpMouse;
-	
-	@FXML TextField breakClick;
-	
-	@FXML TextField timeWaitingTecla;
 	
 	public static boolean parada;
 	public static long init;
@@ -50,6 +53,10 @@ public class PrincipalController{
 	GravaMouse gm;
 	ReproduzirMouse rm;
 	
+	public static boolean agilidadePriff;
+	
+	public static int contMove = 0;
+	
 	private double posicaoX[] = new double [50];
 	private double posicaoY[] = new double [50];
 	
@@ -57,18 +64,6 @@ public class PrincipalController{
 	public void initialize() {
 		inicializaComboTeclas();
 		inicializaComboTeclasRpMouse();
-	}
-	
-	@FXML
-	public void contrucao() {
-		
-		System.out.println("a");
-		
-		parada = false;
-		
-		Thread c = new AutoConstruiction();
-		c.start();
-		
 	}
 	
 	@FXML
@@ -85,15 +80,13 @@ public class PrincipalController{
 				    throw erro;
 				 }else {
 					timeWait*=1000;
-					init = System.currentTimeMillis();
-					intervalo = System.currentTimeMillis() + timeWait;
 				 }
 			
 		}catch (NumberFormatException e) {
 			mostraMensagem("Só é possivel digitar números.", AlertType.WARNING);
 		}
 		
-		Thread cp =  new ClickPadrao(init, intervalo, timeWait);
+		Thread cp =  new ClickPadrao(timeWait);
 		cp.start();		
 				
 	}
@@ -258,6 +251,44 @@ public class PrincipalController{
 		
 	}
 	
+	@FXML
+	public void contrucao() {
+		
+		parada = false;
+		
+//		Thread c = new AutoConstruiction();
+		AutoConstruiction c = new AutoConstruiction();
+		c.setInit(System.currentTimeMillis());
+		c.setIntervalo(900*1000); //900*1000
+		c.start();
+		
+	}
+	
+	@FXML
+	public void agilidade() {
+		
+		parada = false;
+		
+		agilidadePriff = agilidadePriffdinas.isSelected();
+		
+		Agilidade a = new Agilidade();
+		a.setInit(System.currentTimeMillis());
+		a.setIntervalo(900*1000); //900*1000
+		a.start();
+		
+	}
+	
+	@FXML
+	public void proteicos() {
+		
+		parada = false;
+		
+		Proteicos p = new Proteicos();
+		p.start();
+		
+	}
+	
+	
 	private void inicializaComboTeclas() {
 
 		teclas.getItems().add("SPACE");
@@ -291,5 +322,233 @@ public class PrincipalController{
 			a.setContentText(msg);
 			a.show();
 		}
+
+	public TextField getTimeWaiting() {
+		return timeWaiting;
+	}
+
+	public void setTimeWaiting(TextField timeWaiting) {
+		this.timeWaiting = timeWaiting;
+	}
+
+	public TextField getMinTimeWaiting() {
+		return minTimeWaiting;
+	}
+
+	public void setMinTimeWaiting(TextField minTimeWaiting) {
+		this.minTimeWaiting = minTimeWaiting;
+	}
+
+	public TextField getMaxTimeWaiting() {
+		return maxTimeWaiting;
+	}
+
+	public void setMaxTimeWaiting(TextField maxTimeWaiting) {
+		this.maxTimeWaiting = maxTimeWaiting;
+	}
+
+	public TextField getMaxTtimeTecla() {
+		return maxTtimeTecla;
+	}
+
+	public void setMaxTtimeTecla(TextField maxTtimeTecla) {
+		this.maxTtimeTecla = maxTtimeTecla;
+	}
+
+	public TextField getBreakClick() {
+		return breakClick;
+	}
+
+	public void setBreakClick(TextField breakClick) {
+		this.breakClick = breakClick;
+	}
+
+	public TextField getTimeWaitingTecla() {
+		return timeWaitingTecla;
+	}
+
+	public void setTimeWaitingTecla(TextField timeWaitingTecla) {
+		this.timeWaitingTecla = timeWaitingTecla;
+	}
+
+	public ComboBox<String> getTeclas() {
+		return teclas;
+	}
+
+	public void setTeclas(ComboBox<String> teclas) {
+		this.teclas = teclas;
+	}
+
+	public ComboBox<String> getTeclasRpMouse() {
+		return teclasRpMouse;
+	}
+
+	public void setTeclasRpMouse(ComboBox<String> teclasRpMouse) {
+		this.teclasRpMouse = teclasRpMouse;
+	}
+
+	public static boolean isParada() {
+		return parada;
+	}
+
+	public static void setParada(boolean parada) {
+		PrincipalController.parada = parada;
+	}
+
+	public static long getInit() {
+		return init;
+	}
+
+	public static void setInit(long init) {
+		PrincipalController.init = init;
+	}
+
+	public static long getIntervalo() {
+		return intervalo;
+	}
+
+	public static void setIntervalo(long intervalo) {
+		PrincipalController.intervalo = intervalo;
+	}
+
+	public int getTimeWait() {
+		return timeWait;
+	}
+
+	public void setTimeWait(int timeWait) {
+		this.timeWait = timeWait;
+	}
+
+	public int getMaxTimeWait() {
+		return maxTimeWait;
+	}
+
+	public void setMaxTimeWait(int maxTimeWait) {
+		this.maxTimeWait = maxTimeWait;
+	}
+
+	public int getMinTimeWait() {
+		return minTimeWait;
+	}
+
+	public void setMinTimeWait(int minTimeWait) {
+		this.minTimeWait = minTimeWait;
+	}
+
+	public int getMaxTimeTecla() {
+		return maxTimeTecla;
+	}
+
+	public void setMaxTimeTecla(int maxTimeTecla) {
+		this.maxTimeTecla = maxTimeTecla;
+	}
+
+	public int getBreakClicks() {
+		return breakClicks;
+	}
+
+	public void setBreakClicks(int breakClicks) {
+		this.breakClicks = breakClicks;
+	}
+
+	public int getTimeWaitingTeclas() {
+		return timeWaitingTeclas;
+	}
+
+	public void setTimeWaitingTeclas(int timeWaitingTeclas) {
+		this.timeWaitingTeclas = timeWaitingTeclas;
+	}
+
+	public String getTecla() {
+		return tecla;
+	}
+
+	public void setTecla(String tecla) {
+		this.tecla = tecla;
+	}
+	
+	public static boolean isAgilidadePriff() {
+		return agilidadePriff;
+	}
+
+	public static void setAgilidadePriff(boolean agilidadePriff) {
+		PrincipalController.agilidadePriff = agilidadePriff;
+	}
+
+	public void setAgilidadePriffdinas(RadioButton agilidadePriffdinas) {
+		this.agilidadePriffdinas = agilidadePriffdinas;
+	}
+
+	public static boolean isTecladoAtivo() {
+		return tecladoAtivo;
+	}
+
+	public static void setTecladoAtivo(boolean tecladoAtivo) {
+		PrincipalController.tecladoAtivo = tecladoAtivo;
+	}
+
+	public static int getCont() {
+		return cont;
+	}
+
+	public static void setCont(int cont) {
+		PrincipalController.cont = cont;
+	}
+
+	public static boolean isGravandoMouse() {
+		return gravandoMouse;
+	}
+
+	public static void setGravandoMouse(boolean gravandoMouse) {
+		PrincipalController.gravandoMouse = gravandoMouse;
+	}
+
+	public static boolean isReproduzindoMouse() {
+		return reproduzindoMouse;
+	}
+
+	public static void setReproduzindoMouse(boolean reproduzindoMouse) {
+		PrincipalController.reproduzindoMouse = reproduzindoMouse;
+	}
+
+	public GravaMouse getGm() {
+		return gm;
+	}
+
+	public void setGm(GravaMouse gm) {
+		this.gm = gm;
+	}
+
+	public ReproduzirMouse getRm() {
+		return rm;
+	}
+
+	public void setRm(ReproduzirMouse rm) {
+		this.rm = rm;
+	}
+
+	public static int getContMove() {
+		return contMove;
+	}
+
+	public static void setContMove(int contMove) {
+		PrincipalController.contMove = contMove;
+	}
+
+	public double[] getPosicaoX() {
+		return posicaoX;
+	}
+
+	public void setPosicaoX(double[] posicaoX) {
+		this.posicaoX = posicaoX;
+	}
+
+	public double[] getPosicaoY() {
+		return posicaoY;
+	}
+
+	public void setPosicaoY(double[] posicaoY) {
+		this.posicaoY = posicaoY;
+	}
 	
 }
