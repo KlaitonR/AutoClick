@@ -3,6 +3,7 @@ package view;
 import java.util.concurrent.ThreadLocalRandom;
 
 import Model.Agilidade;
+import Model.Agricultura;
 import Model.AutoConstruiction;
 import Model.ClickPadrao;
 import Model.ClickRandomico;
@@ -269,11 +270,21 @@ public class PrincipalController{
 		
 		parada = false;
 		
-		agilidadePriff = agilidadePriffdinas.isSelected();
-		
 		Agilidade a = new Agilidade();
-		a.setInit(System.currentTimeMillis());
-		a.setIntervalo(900*1000); //900*1000
+//		a.setInit(System.currentTimeMillis());
+//		a.setIntervalo(900*1000); //900*1000
+		a.start();
+		
+	}
+	
+	@FXML
+	public void agricultura() {
+		
+		parada = false;
+		
+		Agricultura a = new Agricultura();
+//		a.setInit(System.currentTimeMillis());
+//		a.setIntervalo(900*1000); //900*1000
 		a.start();
 		
 	}

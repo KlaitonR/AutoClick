@@ -394,9 +394,39 @@
                                                    </children></AnchorPane>
                                           </content>
                                         </Tab>
-                                        <Tab text="Untitled Tab 2">
+                                        <Tab text="Evento reconstrução arena">
                                           <content>
-                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <VBox layoutX="138.0" layoutY="-46.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <HBox>
+                                                               <children>
+                                                                  <Label text="Segundos: ">
+                                                                     <HBox.margin>
+                                                                        <Insets left="10.0" top="10.0" />
+                                                                     </HBox.margin>
+                                                                  </Label>
+                                                                  <TextField>
+                                                                     <HBox.margin>
+                                                                        <Insets left="10.0" top="10.0" />
+                                                                     </HBox.margin>
+                                                                  </TextField>
+                                                               </children>
+                                                            </HBox>
+                                                            <Button mnemonicParsing="false" onAction="#agricultura" text="Iniciar">
+                                                               <VBox.margin>
+                                                                  <Insets left="10.0" top="10.0" />
+                                                               </VBox.margin>
+                                                            </Button>
+                                                            <Button mnemonicParsing="false" onAction="#parada" text="Parar">
+                                                               <VBox.margin>
+                                                                  <Insets left="10.0" top="10.0" />
+                                                               </VBox.margin>
+                                                            </Button>
+                                                         </children>
+                                                      </VBox>
+                                                   </children></AnchorPane>
                                           </content>
                                         </Tab>
                                       </tabs>
