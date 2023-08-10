@@ -10,6 +10,7 @@ import Model.ClickPadrao;
 import Model.ClickRandomico;
 import Model.DungeonEventoPraia;
 import Model.GravaMouse;
+import Model.Necromancia;
 import Model.Proteicos;
 import Model.ReproduzirMouse;
 import javafx.fxml.FXML;
@@ -19,7 +20,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
-public class PrincipalController{
+public class PrincipalController {
 
 	@FXML TextField timeWaiting;
 	@FXML TextField minTimeWaiting;
@@ -296,7 +297,6 @@ public class PrincipalController{
 	
 	@FXML
 	public void proteicos() {
-		
 		parada = false;
 		
 //		Proteicos p = new Proteicos();
@@ -304,9 +304,15 @@ public class PrincipalController{
 		
 		DungeonEventoPraia d = new DungeonEventoPraia();
 		d.start();
-		
 	}
 	
+	@FXML
+	public void necromancia() {
+		parada = false;
+		
+		Necromancia n = new Necromancia();
+		n.start();
+	}
 	
 	private void inicializaComboTeclas() {
 
