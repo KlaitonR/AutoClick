@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Toolkit;
 import java.util.concurrent.ThreadLocalRandom;
 
 import Model.Agilidade;
@@ -7,6 +8,7 @@ import Model.Agricultura;
 import Model.AutoConstruiction;
 import Model.ClickPadrao;
 import Model.ClickRandomico;
+import Model.DungeonEventoPraia;
 import Model.GravaMouse;
 import Model.Proteicos;
 import Model.ReproduzirMouse;
@@ -280,6 +282,9 @@ public class PrincipalController{
 	@FXML
 	public void agricultura() {
 		
+		System.out.println("LARGURA" + Toolkit.getDefaultToolkit().getScreenSize().width);
+		System.out.println("LARGURA" + Toolkit.getDefaultToolkit().getScreenSize().height);
+		
 		parada = false;
 		
 		Agricultura a = new Agricultura();
@@ -294,8 +299,11 @@ public class PrincipalController{
 		
 		parada = false;
 		
-		Proteicos p = new Proteicos();
-		p.start();
+//		Proteicos p = new Proteicos();
+//		p.start();
+		
+		DungeonEventoPraia d = new DungeonEventoPraia();
+		d.start();
 		
 	}
 	
